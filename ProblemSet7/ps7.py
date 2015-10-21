@@ -112,15 +112,36 @@ class SummaryTrigger(WordTrigger):
             return True
         return False
 
-# TODO: SummaryTrigger
-
-
 # Composite Triggers
 # Problems 6-8
 
-# TODO: NotTrigger
-# TODO: AndTrigger
-# TODO: OrTrigger
+class NotTrigger(Trigger):
+    def __init__(self, aTrigger):
+        self.aTrigger = aTrigger
+
+    def evaluate(self, story):
+        return not self.aTrigger.evaluate(story)
+
+
+class AndTrigger(Trigger):
+    def __init__(self, aTrigger, bTrigger):
+        self.aTrigger = aTrigger
+        self.bTrigger = bTrigger
+
+    def evaluate(self, story):
+        if self.aTrigger.evaluate(story) and self.bTrigger.evaluate(story):
+            return True
+        return False
+
+class OrTrigger(Trigger):
+    def __init__(self, aTrigger, bTrigger):
+        self.aTrigger = aTrigger
+        self.bTrigger = bTrigger
+
+    def evaluate(self, story):
+        if self.aTrigger.evaluate(story) or self.bTrigger.evaluate(story):
+            return True
+        return False
 
 # Phrase Trigger
 # Question 9
