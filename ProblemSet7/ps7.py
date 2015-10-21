@@ -89,13 +89,29 @@ class WordTrigger(Trigger):
     def __init__(self, word):
         self.word = word
     def isWordIn(self, text):
+        text = str(text.lower()).replace('\'', ' ')
         return self.word.lower() in [word.strip(string.punctuation) for word in text.lower().split()]
 
 class TitleTrigger(WordTrigger):
     def evaluate(self, story):
         return super(TitleTrigger, self).isWordIn(story.getTitle())
     
-# TODO: SubjectTrigger
+class SubjectTrigger(WordTrigger):
+    def evaluate(self, story):
+        text = story.getSubject()
+        wordTrigger = super(self.__class__, self)
+        if wordTrigger.isWordIn(text):
+            return True
+        return False
+
+class SummaryTrigger(WordTrigger):
+    def evaluate(self, story):
+        text = story.getSummary()
+        wordTrigger = super(self.__class__, self)
+        if wordTrigger.isWordIn(text):
+            return True
+        return False
+
 # TODO: SummaryTrigger
 
 
